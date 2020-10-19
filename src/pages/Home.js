@@ -44,6 +44,11 @@ const CardContent = styled.div`
   padding: 16px;
 `
 
+const CardFooter = styled.footer`
+  display: flex;
+  justify-content: center;
+`
+
 const Img = styled.img`
   width: 100%;
   height: auto;

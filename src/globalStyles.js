@@ -13,5 +13,6 @@ export const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.onBackground};
     transition: all 0.50s linear;
     font-family: helvetica, sans-serif;
+    margin: 0;
   }
 `
