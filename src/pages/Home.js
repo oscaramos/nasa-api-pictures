@@ -3,6 +3,7 @@ import useFetch from "react-fetch-hook";
 import styled from 'styled-components'
 
 import { ReactComponent as RocketIcon } from '../assets/rocket.svg'
+import Clickable from '../components/Clickable'
 
 const Nav = styled.nav`
   display: flex;
@@ -15,17 +16,6 @@ const Nav = styled.nav`
   position: fixed;
   top: 0;
   background-color: ${props => props.theme.background};
-`
-
-const Clickable = styled.h2`
-  color: dodgerblue;
-  font-size: 1.5rem;
-  cursor: pointer;
-  user-select: none;
-  
-  :hover {
-    filter: brightness(70%);
-  }
 `
 
 function NavBar() {
