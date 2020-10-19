@@ -6,12 +6,12 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   html {
-    scroll-behavior: smooth;
   }
 
   body {
     background-color: ${({ theme }) => theme.background};
     color: ${({ theme }) => theme.onBackground};
     transition: all 0.50s linear;
+    font-family: helvetica, sans-serif;
   }
 `
