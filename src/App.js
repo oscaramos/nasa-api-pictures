@@ -2,9 +2,10 @@ import React from 'react'
 import { ThemeProvider } from 'styled-components'
 
 import { darkTheme, lightTheme } from './themes'
+import { useDarkMode } from './hooks/useDarkMode'
 import { GlobalStyles } from './globalStyles'
 
-import { useDarkMode } from './hooks/useDarkMode'
+import Home from './pages/Home'
 
 function App() {
   const [theme] = useDarkMode()
@@ -13,11 +14,9 @@ function App() {
   return (
     <ThemeProvider theme={themeMode}>
       <GlobalStyles />
-      <div>
-        Hola mundo
-      </div>
+      <Home />
     </ThemeProvider>
-  );
+  )
 }
 
 export default App
