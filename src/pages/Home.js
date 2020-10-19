@@ -1,6 +1,8 @@
 import React from 'react'
-import { ReactComponent as RocketIcon } from '../assets/rocket.svg'
+import useFetch from "react-fetch-hook";
 import styled from 'styled-components'
+
+import { ReactComponent as RocketIcon } from '../assets/rocket.svg'
 
 const Nav = styled.nav`
   display: flex;
@@ -84,7 +86,11 @@ const SavedConfirmationContainer = styled(CardContainer)`
   right: 24px;
 `
 
-function SavedConfirmation() {
+function SavedConfirmation({ hidden }) {
+  if (hidden) {
+    return null
+  }
+
   return (
     <SavedConfirmationContainer>
       <div style={{ fontSize: 36, fontWeight: 'bold' }}>
@@ -113,8 +119,11 @@ const CardsContainer = styled.div`
   gap: 40px;
 `
 
+// NASA Api using demo key
+const apiUrl = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&count=10'
+
 function Home() {
-  const isLoading = false
+  const { isLoading, data } = useFetch(apiUrl)
 
   if (isLoading) {
     return (
@@ -128,22 +137,19 @@ function Home() {
     <HomeContainer>
       <NavBar />
       <CardsContainer>
-        <Card
-          imgSrc='https://apod.nasa.gov/apod/image/9810/discodawn_nasa.jpg'
-          title='John Glenn: Discovery Launch'
-          description='Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae dignissimos harum minima, provident quo
-          reprehenderit sint soluta. Adipisci architecto esse id mollitia neque, nisi omnis quia similique ut vel.
-          Exercitationem?'
-        />
-        <Card
-          imgSrc='https://apod.nasa.gov/apod/image/9810/discodawn_nasa.jpg'
-          title='John Glenn: Discovery Launch'
-          description='Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae dignissimos harum minima, provident quo
-          reprehenderit sint soluta. Adipisci architecto esse id mollitia neque, nisi omnis quia similique ut vel.
-          Exercitationem?'
-        />
+      {
+        data.map(item =>
+          item.media_type !== 'image' ? null : (
+            <Card
+              key={item.title}
+              title={item.title}
+              imgSrc={item.url}
+              description={item.explanation}
+            />
+          ))
+      }
       </CardsContainer>
-      <SavedConfirmation />
+      <SavedConfirmation hidden />
     </HomeContainer>
   )
 }
