@@ -55,10 +55,14 @@ const Img = styled.img`
   border-radius: 8px 8px 0 0;
 `
 
-function Card({ imgSrc, title, description }) {
+function Card({ item, onClickMoreInfo, onAddFavorite }) {
+  const { explanation, url, hdurl, title } = item
+
   return (
     <CardContainer style={{ maxWidth: 750 }}>
-      <Img src={imgSrc} />
+      <a href={hdurl} target="_blank">
+        <Img src={url} />
+      </a>
       <CardContent>
         <h3 style={{ fontSize: 26, marginBottom: 16 }}>
           {title}
@@ -67,9 +71,17 @@ function Card({ imgSrc, title, description }) {
           Add to favorites
         </Clickable>
         <p style={{ fontSize: 18 }}>
-          {description}
+          {explanation}
         </p>
       </CardContent>
+      <CardFooter>
+        <Clickable
+          style={{ fontSize: 16, fontWeight: 'normal' }}
+          onClick={onClickMoreInfo}
+        >
+          More info
+        </Clickable>
+      </CardFooter>
     </CardContainer>
   )
 }
@@ -94,6 +106,7 @@ function SavedConfirmation({ hidden }) {
     </SavedConfirmationContainer>
   )
 }
+
 const Loader = styled.div`
   display: flex;  
   justify-content: center;
@@ -120,12 +133,9 @@ const apiUrl = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&count=10'
 function Home() {
   const { isLoading, data } = useFetch(apiUrl)
 
-  if (isLoading) {
-    return (
-      <Loader>
-        <RocketIcon />
-      </Loader>
-    )
+  const handleMoreInfo = card => {
+    setRoute('cardInfo')
+    setCard(card)
   }
 
   return (
@@ -134,14 +144,13 @@ function Home() {
       <CardsContainer>
       {
         data.map(item =>
-          item.media_type !== 'image' ? null : (
-            <Card
-              key={item.title}
-              title={item.title}
-              imgSrc={item.url}
-              description={item.explanation}
-            />
-          ))
+          <Card
+            item={item}
+            key={item.title}
+            onClickMoreInfo={() => handleMoreInfo(item)}
+            onAddFavorite={() => addFavorite(item)}
+          />
+        )
       }
       </CardsContainer>
       <SavedConfirmation hidden />

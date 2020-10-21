@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 
 import { darkTheme, lightTheme } from './themes'
@@ -6,6 +6,7 @@ import { useDarkMode } from './hooks/useDarkMode'
 import { GlobalStyles } from './globalStyles'
 
 import Home from './pages/Home'
+import CardInfo from './pages/CardInfo'
 
 function App() {
   const [theme] = useDarkMode()

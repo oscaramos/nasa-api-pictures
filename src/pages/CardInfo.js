@@ -19,16 +19,20 @@ const Img = styled.img`
   margin: 0;
 `
 
-function CardInfo({ item, onBack }) {
-  const { date, explanation, hdurl, title } = item
-  if (item === null) {
+function CardInfo({ card, setRoute }) {
+  const { date, explanation, hdurl, title } = card
+  if (card === null) {
     return null
+  }
+
+  const handleBackToHome = () => {
+    setRoute('home')
   }
 
   return (
     <Container>
       <CardContent>
-        <Clickable style={{ fontSize: 18, fontWeight: 'normal' }} onClick={onBack}>
+        <Clickable style={{ fontSize: 18, fontWeight: 'normal' }} onClick={handleBackToHome}>
           Go back
         </Clickable>
         <h3 style={{ fontSize: 26, marginBottom: 16, marginTop: 50 }}>
