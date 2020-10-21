@@ -67,7 +67,10 @@ function Card({ item, onClickMoreInfo, onAddFavorite }) {
         <h3 style={{ fontSize: 26, marginBottom: 16 }}>
           {title}
         </h3>
-        <Clickable style={{ fontSize: 18, fontWeight: 'normal' }}>
+        <Clickable
+          style={{ fontSize: 18, fontWeight: 'normal' }}
+          onClick={onAddFavorite}
+        >
           Add to favorites
         </Clickable>
         <p style={{ fontSize: 18 }}>
@@ -130,7 +133,7 @@ const CardsContainer = styled.div`
 // NASA Api using demo key
 const apiUrl = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&count=10'
 
-function Home() {
+function Home({ setCard, setRoute, addFavorite }) {
   const { isLoading, data } = useFetch(apiUrl)
 
   const handleMoreInfo = card => {
