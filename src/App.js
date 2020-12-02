@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { ThemeProvider } from 'styled-components'
+import React from 'react'
+import styled, { ThemeProvider } from 'styled-components'
 
 import { darkTheme, lightTheme } from './themes'
 import { useDarkMode } from './hooks/useDarkMode'
@@ -7,26 +7,81 @@ import { GlobalStyles } from './globalStyles'
 
 import Home from './pages/Home'
 import CardInfo from './pages/CardInfo'
+import Favorites from './pages/Favorites'
+import Clickable from './components/Clickable'
+import Route, { Router, useRoute } from './hooks/useRoute'
+import { FavoritesProvider } from './hooks/useFavorites'
+import { CardInfoProvider } from './hooks/useCardInfo'
+import { ConfirmationProvider } from './hooks/useConfirmation'
+
+const Nav = styled.nav`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 16px;
+  
+  width: 100%;
+  height: 70px;
+  position: fixed;
+  top: 0;
+  background-color: ${props => props.theme.background};
+`
+
+function NavBar() {
+  const [, setRoute] = useRoute()
+  return (
+    <Nav>
+      <Clickable onClick={() => setRoute('/')}>
+        Home
+      </Clickable>
+      <h2>
+        •
+      </h2>
+      <Clickable onClick={() => setRoute('/favorites')}>
+        Favorites
+      </Clickable>
+      <h2>
+        •
+      </h2>
+      <Clickable>
+        Load more
+      </Clickable>
+    </Nav>
+  )
+}
+
+const AppContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`
+
+const AppProviders = ({ children }) => {
+  return (
+    <FavoritesProvider>
+      <CardInfoProvider>
+        <ConfirmationProvider>
+          { children }
+        </ConfirmationProvider>
+      </CardInfoProvider>
+    </FavoritesProvider>
+  )
+}
 
 function App() {
-  const [route, setRoute] = useState('home')
-  const [card, setCard] = useState(null)
+  return (
+    <AppContainer>
+      <AppProviders>
+        <Router>
+          <NavBar />
 
-  const [favorites, setFavorites] = useState([])
-
-  const addFavorite = card => {
-    // If card is not already in favorites
-    if (favorites.indexOf(card) !== -1) {
-      // Push back new card to favorites
-      setFavorites([...favorites, card])
-    }
-  }
-
-  if (route === 'home')
-    return <Home setCard={setCard} setRoute={setRoute} addFavorite={addFavorite} />
-  if (route === 'card')
-    return <CardInfo card={card} setRoute={setRoute} />
-  return null
+          <Route path='/' component={<Home />} />
+          <Route path='/cardInfo' component={<CardInfo />} />
+          <Route path='/favorites' component={<Favorites />} />
+        </Router>
+      </AppProviders>
+    </AppContainer>
+  )
 }
 
 function AppWrapper() {

@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import Clickable from '../components/Clickable'
+import { useCardInfo } from '../hooks/useCardInfo'
+import { useRoute } from '../hooks/useRoute'
 
 const Container = styled.div`
   height: 100vh;
@@ -19,14 +21,17 @@ const Img = styled.img`
   margin: 0;
 `
 
-function CardInfo({ card, setRoute }) {
+function CardInfo() {
+  const [card] = useCardInfo()
+  const [, setRoute] = useRoute()
+
   const { date, explanation, hdurl, title } = card
   if (card === null) {
     return null
   }
 
   const handleBackToHome = () => {
-    setRoute('home')
+    setRoute('/home')
   }
 
   return (
