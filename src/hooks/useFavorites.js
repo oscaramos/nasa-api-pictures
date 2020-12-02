@@ -6,12 +6,12 @@ const FavoritesContext = createContext(undefined)
 export function FavoritesProvider({ children }) {
   const [favorites, setFavorites] = useState([])
 
-  // Add an new card to favorites list
-  const add = card => {
-    // If card exists then no add it again
-    if (favorites.indexOf(card) !== -1) return
+  // Add an new picture to favorites list
+  const add = picture => {
+    // If picture exists then no add it again
+    if (favorites.indexOf(picture) !== -1) return
 
-    setFavorites([...favorites, card])
+    setFavorites([...favorites, picture])
   }
 
   return (

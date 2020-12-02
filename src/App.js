@@ -6,12 +6,12 @@ import { useDarkMode } from './hooks/useDarkMode'
 import { GlobalStyles } from './globalStyles'
 
 import Home from './pages/Home'
-import CardInfo from './pages/CardInfo'
+import PictureData from './pages/PictureData'
 import Favorites from './pages/Favorites'
 import Clickable from './components/Clickable'
 import Route, { Router, useRoute } from './hooks/useRoute'
 import { FavoritesProvider } from './hooks/useFavorites'
-import { CardInfoProvider } from './hooks/useCardInfo'
+import { PictureDataProvider } from './hooks/usePictureData'
 import { ConfirmationProvider } from './hooks/useConfirmation'
 
 const Nav = styled.nav`
@@ -59,11 +59,11 @@ const AppContainer = styled.div`
 const AppProviders = ({ children }) => {
   return (
     <FavoritesProvider>
-      <CardInfoProvider>
+      <PictureDataProvider>
         <ConfirmationProvider>
           { children }
         </ConfirmationProvider>
-      </CardInfoProvider>
+      </PictureDataProvider>
     </FavoritesProvider>
   )
 }
@@ -76,7 +76,7 @@ function App() {
           <NavBar />
 
           <Route path='/' component={<Home />} />
-          <Route path='/cardInfo' component={<CardInfo />} />
+          <Route path='/pictureData' component={<PictureData />} />
           <Route path='/favorites' component={<Favorites />} />
         </Router>
       </AppProviders>

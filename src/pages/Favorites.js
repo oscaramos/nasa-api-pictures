@@ -5,7 +5,7 @@ import { useFavorites } from '../hooks/useFavorites'
 function Favorites() {
   const [favorites] = useFavorites()
   return (
-    <Cards data={favorites} />
+    <Cards pictures={favorites} />
   )
 }
 

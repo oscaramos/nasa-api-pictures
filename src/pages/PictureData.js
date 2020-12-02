@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Clickable from '../components/Clickable'
-import { useCardInfo } from '../hooks/useCardInfo'
+import { usePictureData } from '../hooks/usePictureData'
 import { useRoute } from '../hooks/useRoute'
 
 const Container = styled.div`
@@ -21,12 +21,12 @@ const Img = styled.img`
   margin: 0;
 `
 
-function CardInfo() {
-  const [card] = useCardInfo()
+function PictureData() {
+  const [picture] = usePictureData()
   const [, setRoute] = useRoute()
 
-  const { date, explanation, hdurl, title } = card
-  if (card === null) {
+  const { date, explanation, hdurl, title } = picture
+  if (picture === null) {
     return null
   }
 
@@ -60,4 +60,4 @@ function CardInfo() {
   )
 }
 
-export default CardInfo
+export default PictureData
