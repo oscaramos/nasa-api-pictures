@@ -1,8 +1,7 @@
 import React from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 
-import { darkTheme, lightTheme } from './themes'
-import { useDarkMode } from './hooks/useDarkMode'
+import { theme } from './themes'
 import { GlobalStyles } from './globalStyles'
 
 import Home from './pages/Home'
@@ -73,32 +72,22 @@ const AppProviders = ({ children }) => {
   )
 }
 
-function App() {
+export default function App() {
   return (
-    <AppContainer>
-      <AppProviders>
-        <Router>
-          <NavBar />
-
-          <Route path='/' component={<Home />} />
-          <Route path='/pictureData' component={<PictureData />} />
-          <Route path='/favorites' component={<Favorites />} />
-        </Router>
-      </AppProviders>
-    </AppContainer>
-  )
-}
-
-function AppWrapper() {
-  const [theme] = useDarkMode()
-  const themeMode = theme === 'light' ? lightTheme : darkTheme
-
-  return (
-    <ThemeProvider theme={themeMode}>
+    <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <App />
+
+      <AppContainer>
+        <AppProviders>
+          <Router>
+            <NavBar />
+
+            <Route path='/' component={<Home />} />
+            <Route path='/pictureData' component={<PictureData />} />
+            <Route path='/favorites' component={<Favorites />} />
+          </Router>
+        </AppProviders>
+      </AppContainer>
     </ThemeProvider>
   )
 }
-
-export default AppWrapper
