@@ -32,7 +32,7 @@ function Card({ picture, isAddedToFavorites, onClickMoreInfo, onAddFavorite, onR
 
   return (
     <CardContainer style={{ maxWidth: 750 }}>
-      <a href={hdurl} target="_blank">
+      <a href={hdurl} target="_blank" rel="noopener noreferrer">
         <Img src={url} />
       </a>
       <CardContent>

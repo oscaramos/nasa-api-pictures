@@ -4,7 +4,7 @@ import { useState, createContext, useContext } from 'react'
 const PictureDataContext = createContext(undefined)
 
 export function PictureDataProvider({ children }) {
-  const [picture, setPicture] = useState([])
+  const [picture, setPicture] = useState(null)
 
   return (
     <PictureDataContext.Provider value={ [picture, setPicture] }>

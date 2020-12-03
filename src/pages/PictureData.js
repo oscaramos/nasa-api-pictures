@@ -44,8 +44,9 @@ function PictureDataView({ title, explanation, date, hdurl, onAddFavorite, onRem
         <h4>
           { date }
         </h4>
+
       </PictureContent>
-      <a href={hdurl} target="_blank">
+      <a href={hdurl} target="_blank" rel="noopener noreferrer">
         <Img src={hdurl} />
       </a>
     </Container>
