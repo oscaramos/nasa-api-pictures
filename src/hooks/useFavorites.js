@@ -14,8 +14,12 @@ export function FavoritesProvider({ children }) {
     setFavorites([...favorites, picture])
   }
 
+  const remove = pictureToRemove => {
+    setFavorites(favorites.filter(picture => picture !== pictureToRemove))
+  }
+
   return (
-    <FavoritesContext.Provider value={ [favorites, { add }] }>
+    <FavoritesContext.Provider value={ [favorites, { add, remove }] }>
       { children }
     </FavoritesContext.Provider>
   )
