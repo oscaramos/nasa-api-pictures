@@ -13,6 +13,7 @@ import Route, { Router, useRoute } from './hooks/useRoute'
 import { FavoritesProvider } from './hooks/useFavorites'
 import { PictureDataProvider } from './hooks/usePictureData'
 import { ConfirmationProvider } from './hooks/useConfirmation'
+import { PicturesProvider, usePictures } from './hooks/usePictures'
 
 const Nav = styled.nav`
   display: flex;
@@ -29,6 +30,8 @@ const Nav = styled.nav`
 
 function NavBar() {
   const [, setRoute] = useRoute()
+  const [, { loadMore }] = usePictures()
+
   return (
     <Nav>
       <Clickable onClick={() => setRoute('/')}>
@@ -43,7 +46,7 @@ function NavBar() {
       <h2>
         •
       </h2>
-      <Clickable>
+      <Clickable onClick={loadMore}>
         Load more
       </Clickable>
     </Nav>
@@ -58,13 +61,15 @@ const AppContainer = styled.div`
 
 const AppProviders = ({ children }) => {
   return (
-    <FavoritesProvider>
-      <PictureDataProvider>
-        <ConfirmationProvider>
-          { children }
-        </ConfirmationProvider>
-      </PictureDataProvider>
-    </FavoritesProvider>
+    <PicturesProvider>
+      <FavoritesProvider>
+        <PictureDataProvider>
+          <ConfirmationProvider>
+            { children }
+          </ConfirmationProvider>
+        </PictureDataProvider>
+      </FavoritesProvider>
+    </PicturesProvider>
   )
 }
 

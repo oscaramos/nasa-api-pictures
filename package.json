@@ -10,6 +10,7 @@
     "react-dom": "^16.14.0",
     "react-fetch-hook": "^1.8.3",
     "react-scripts": "3.4.3",
+    "react-use-trigger": "^0.3.4",
     "styled-components": "^5.2.0"
   },
   "scripts": {
