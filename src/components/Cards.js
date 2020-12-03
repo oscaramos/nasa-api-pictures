@@ -83,7 +83,7 @@ const CardsContainer = styled.div`
 
 function Cards({ pictures }) {
   const [, setRoute] = useRoute()
-  const [favoritesPictures, { add, remove }] = useFavorites()
+  const [, { add, remove, isIncluded }] = useFavorites()
   const [, setPicture] = usePictureData()
   const { show } = useConfirmation()
 
@@ -111,7 +111,7 @@ function Cards({ pictures }) {
             picture={ picture }
             onClickMoreInfo={ () => handleMoreInfo(picture) }
             onAddFavorite={ () => handleAddFavorite(picture) }
-            isAddedToFavorites={ favoritesPictures.includes(picture) }
+            isAddedToFavorites={ isIncluded(picture) }
             onRemoveFavorite={() => handleRemoveFavorite(picture)}
           />)
       }

@@ -18,8 +18,12 @@ export function FavoritesProvider({ children }) {
     setFavorites(favorites.filter(picture => picture !== pictureToRemove))
   }
 
+  const isIncluded = (picture) => {
+    return favorites.includes(picture)
+  }
+
   return (
-    <FavoritesContext.Provider value={ [favorites, { add, remove }] }>
+    <FavoritesContext.Provider value={ [favorites, { add, remove, isIncluded }] }>
       { children }
     </FavoritesContext.Provider>
   )
