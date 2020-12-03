@@ -7,7 +7,7 @@ import { useState } from 'react';
  *
  * Hook taken from https://usehooks.com/useLocalStorage/
  * @param {string} key
- * @param {string} initialValue
+ * @param {string|object} initialValue
  * @returns {(string|setValue)[]}
  * @example
  * function App() {
