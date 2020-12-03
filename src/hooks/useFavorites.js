@@ -1,10 +1,11 @@
 import React from 'react'
-import { useState, createContext, useContext } from 'react'
+import { createContext, useContext } from 'react'
+import useLocalStorage from './useLocalStorage'
 
 const FavoritesContext = createContext(undefined)
 
 export function FavoritesProvider({ children }) {
-  const [favorites, setFavorites] = useState([])
+  const [favorites, setFavorites] = useLocalStorage('favorites', [])
 
   // Add an new picture to favorites list
   const add = picture => {
