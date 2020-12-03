@@ -7,11 +7,10 @@ import Cards from '../components/Cards'
 
 import { useRoute } from '../hooks/useRoute'
 import { useFavorites } from '../hooks/useFavorites'
-import { useCardInfo } from '../hooks/useCardInfo'
+import { usePictureData } from '../hooks/usePictureData'
 
 import { ReactComponent as RocketIcon } from '../assets/rocket.svg'
 import { useConfirmation } from '../hooks/useConfirmation'
-
 
 
 const Loader = styled.div`
@@ -128,27 +127,9 @@ function Home() {
   //   )
   // } TODO
   const data = mockData
-  const [, setRoute] = useRoute()
-  const [, { add }] = useFavorites()
-  const [, setCard] = useCardInfo()
-  const { show } = useConfirmation()
-
-  const handleMoreInfo = card => {
-    setRoute('/cardInfo')
-    setCard(card)
-  }
-
-  const handleAddFavorite = (card) => {
-    add(card)
-    show("ADDED!")
-  }
 
   return (
-    <Cards
-      data={data}
-      onClickMoreInfo={item => handleMoreInfo(item)}
-      onAddFavorite={handleAddFavorite}
-    />
+    <Cards pictures={data} />
   )
 }
 

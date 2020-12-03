@@ -1,6 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import Clickable from './Clickable'
+import { useRoute } from '../hooks/useRoute'
+import { useFavorites } from '../hooks/useFavorites'
+import { usePictureData } from '../hooks/usePictureData'
+import { useConfirmation } from '../hooks/useConfirmation'
 
 const CardContainer = styled.div`
   background-color: white;
@@ -23,8 +27,8 @@ const Img = styled.img`
   border-radius: 8px 8px 0 0;
 `
 
-function Card({ item, onClickMoreInfo, onAddFavorite }) {
-  const { explanation, url, hdurl, title } = item
+function Card({ picture, isAddedToFavorites, onClickMoreInfo, onAddFavorite, onRemoveFavorite }) {
+  const { explanation, url, hdurl, title } = picture
 
   return (
     <CardContainer style={{ maxWidth: 750 }}>
@@ -35,12 +39,25 @@ function Card({ item, onClickMoreInfo, onAddFavorite }) {
         <h3 style={{ fontSize: 26, marginBottom: 16 }}>
           {title}
         </h3>
-        <Clickable
-          style={{ fontSize: 18, fontWeight: 'normal' }}
-          onClick={onAddFavorite}
-        >
-          Add to favorites
-        </Clickable>
+
+        {
+          isAddedToFavorites
+            ? <Clickable
+                style={ { fontSize: 18, fontWeight: 'normal' } }
+                onClick={ onRemoveFavorite }
+                >
+                Remove to favorites
+              </Clickable>
+            : <Clickable
+                style={ { fontSize: 18, fontWeight: 'normal' } }
+                onClick={ onAddFavorite }
+              >
+                Add to favorites
+              </Clickable>
+
+        }
+
+
         <p style={{ fontSize: 18 }}>
           {explanation}
         </p>
@@ -64,18 +81,39 @@ const CardsContainer = styled.div`
   gap: 40px;
 `
 
-function Cards({ data, onClickMoreInfo, onAddFavorite }) {
+function Cards({ pictures }) {
+  const [, setRoute] = useRoute()
+  const [favoritesPictures, { add, remove }] = useFavorites()
+  const [, setPicture] = usePictureData()
+  const { show } = useConfirmation()
+
+  const handleMoreInfo = picture => {
+    setRoute('/pictureData')
+    setPicture(picture)
+  }
+
+  const handleAddFavorite = (picture) => {
+    add(picture)
+    show("ADDED!")
+  }
+
+  const handleRemoveFavorite = (picture) => {
+    remove(picture)
+    show("REMOVED!")
+  }
+
   return (
     <CardsContainer>
       {
-        data.map(item =>
+        pictures.map(picture =>
           <Card
-            item={item}
-            key={item.title}
-            onClickMoreInfo={() => onClickMoreInfo(item)}
-            onAddFavorite={() => onAddFavorite(item)}
-          />
-        )
+            key={ picture.title }
+            picture={ picture }
+            onClickMoreInfo={ () => handleMoreInfo(picture) }
+            onAddFavorite={ () => handleAddFavorite(picture) }
+            isAddedToFavorites={ favoritesPictures.includes(picture) }
+            onRemoveFavorite={() => handleRemoveFavorite(picture)}
+          />)
       }
     </CardsContainer>
   )
