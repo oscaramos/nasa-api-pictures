@@ -13,7 +13,7 @@ const PicturesContext = createContext(undefined)
 
 export function PicturesProvider({ children }) {
   const loadMoreRequestValue = useTrigger(loadMoreRequest)
-  const { data, isLoading } = useFetch(apiUrl, {
+  const { data, isLoading, error } = useFetch(apiUrl, {
     depends: [loadMoreRequestValue]
   })
 
@@ -22,7 +22,7 @@ export function PicturesProvider({ children }) {
   }
 
   return (
-    <PicturesContext.Provider value={ [data, { isLoading, loadMore }] }>
+    <PicturesContext.Provider value={ [data, { isLoading, error, loadMore }] }>
       { children }
     </PicturesContext.Provider>
   )
