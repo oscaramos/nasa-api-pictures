@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState, createContext, useContext } from 'react'
 import styled from 'styled-components'
 
@@ -36,13 +36,19 @@ export function ConfirmationProvider({ children }) {
   const show = (message) => {
     setHidden(false)
     setMessage(message)
-    setTimeout(() => setHidden(true), 2000)
   }
+
+  // Hidden message automatically
+  useEffect(() => {
+    if(hidden) return
+
+    const timeoutID = setTimeout(() => setHidden(true), 2000)
+    return () => clearTimeout(timeoutID)
+  }, [hidden, message])
 
   return (
     <SavedConfirmationContext.Provider value={ { show } }>
       { children }
-
       <SavedConfirmation hidden={hidden} message={message} />
     </SavedConfirmationContext.Provider>
   )
